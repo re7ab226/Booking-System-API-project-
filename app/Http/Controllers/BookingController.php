@@ -42,17 +42,12 @@ class BookingController extends Controller
         }
         $validation= Validator::make($request->all(),[
             
-            'price'=>'required',
-            'time' => '',
-
+            'price' => 'required|numeric',
+            'time' => 'required|date_format:Y-m-d H:i:s',
         ]);
         if ($validation->fails() ){
             return response()-> json($validation->errors()->toJson(),400);
         }
-        // $service = Service::where('user_id', Auth::id())->first(); 
-        // if (!$service) {
-        //     return response()->json(['message' => 'No service found for this user'], 404);
-        // }
         $Booking= new Booking();
         $Booking->time=$request->time;
         $Booking->user_id=Auth::id();
@@ -62,5 +57,41 @@ class BookingController extends Controller
         return response()->json(['message' => 'Booking added successfully', 'booking' => $Booking]);
 
     }
+    public function update(Request $request ,$id){
+        if(!Auth::check()){
+            return response()->json('Login first');
+        }
+        $validation= Validator::make($request->all(),[
+            
+            'price' => 'numeric',
+            'time' => 'date_format:Y-m-d H:i:s',
+        ]);
 
+        if ($validation->fails() ){
+            return response()-> json($validation->errors()->toJson(),400);
+        }
+        $Booking=Booking::find($id);
+            if(!$Booking){
+                return response()->json('no data found');
+            }
+                    $Booking->time=$request->time;
+        $Booking->user_id=Auth::id();
+        $Booking->price=$request->price;
+        // $Booking->services_id=$request->services_id;
+        $Booking->save();
+        return response()->json(['message' => 'Booking Updated successfully', 'booking' => $Booking]);
+
+
+    }
+
+public function delete($id) {
+    $Booking=Booking::find($id);
+    if(!$Booking){
+        return response()->json('No data  found');
+
+    }
+    $Booking->delete();
+    return response()->json('The Item Deleted Sussfully');
+    
+}
 }
