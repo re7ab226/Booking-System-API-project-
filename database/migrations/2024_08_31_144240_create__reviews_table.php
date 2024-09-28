@@ -17,9 +17,7 @@ return new class extends Migration
             $table->foreignId('bussines_id')->constrained()->onDelete('cascade');
             $table->string('reviews');
             $table->float('stars',2);
-            
-
-
+    
             $table->timestamps();
         });
     }

@@ -15,10 +15,9 @@ class BookingController extends Controller
     public function index(){
         $Booking=Booking::where('user_id',Auth::id())
         ->with('services')
-        ->paginate();
+        ->paginate(10);
         return response()->json($Booking);
     }
-
 
     public function show($id){
      

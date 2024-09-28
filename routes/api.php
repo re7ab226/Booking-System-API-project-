@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\BussniesController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Bussnies\ServiceController;
+use App\Http\Controllers\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +54,6 @@ Route::delete('Service/{id}',[ServiceController::class,'delete']);
 }
 );
 #Booking Crud
-
 Route::middleware('auth:sanctum')->group(function (){
  Route::get('/bookings', [BookingController::class, 'index']);
  Route::get('/bookings/{id}', [BookingController::class, 'show']);
@@ -62,6 +62,14 @@ Route::post('/bookings/{id}', [BookingController::class, 'update']);
 Route::delete('/bookings/{id}',[BookingController::class,'delete']);
 });
 
+Route::middleware('auth:sanctum')->group(function (){
+    Route::get('/review', [ReviewController::class, 'index']);
+    Route::get('/review/{id}', [ReviewController::class, 'reviews_show']);
+   Route::post('/review', [ReviewController::class, 'store']);
+   Route::post('/review/{id}', [ReviewController::class, 'update']);
+   Route::delete('/review/{id}',[ReviewController::class,'delete']);
+   });
+   
 
 
 

@@ -18,6 +18,6 @@ class reviews extends Model
         return $this->belongsTo(User::class);
     }
     public function bussines(){
-        return $this->belongsTo(bussines::class);
+        return $this->belongsTo(bussines::class,'bussines_id');
     }
 }
