@@ -27,9 +27,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('login',[AuthController::class,'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
+Route::middleware('admin')->group(function () {
+Route::get('users',[UserController::class,'index']);
+Route::post('adduser', [UserController::class,'store']);
+Route::delete('users/{id}', [UserController::class, 'destroy']);
+
+});
 
 //Bussnies Crud
-
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/businesses', [BussniesController::class, 'create']);
     Route::post('Bussniess/{id}',[BussniesController::class,'update']);
@@ -38,12 +43,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 Route::get('Bussniess',[BussniesController::class,'index']);
 Route::get('Bussniess/{id}',[BussniesController::class,'show']);
-
-Route::post('AddUser', [UserController::class,'store']);
-Route::delete('users/{id}', [UserController::class, 'destroy']);
-
 #Service Crud 
-
 Route::middleware('auth:sanctum')->group(function (){
 Route::get('Service',[ServiceController::class,'index']);
 Route::get('Service/{id}',[ServiceController::class,'show']);

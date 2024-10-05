@@ -15,12 +15,13 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'role'=>'required|string',
-        ]);
+            'role' => 'required|string|in:user,admin',
+                ]);
     
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
+     
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,

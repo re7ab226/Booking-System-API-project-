@@ -11,6 +11,18 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    public function index() {
+        $users = User::all(); // استرجاع جميع المستخدمين
+    
+        if (!$users) {
+            return response()->json(['message' => 'No users found.']);
+        }
+    
+        return response()->json($users);
+        // return view('user', compact('users'));
+    }
+    
+
     public function store( Request $request){
                 $valdiation=validator::make($request->all(),[
                     'name' => 'required',
